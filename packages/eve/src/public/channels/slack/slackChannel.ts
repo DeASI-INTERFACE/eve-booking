@@ -28,6 +28,7 @@ import type {
 import {
   buildSlackBinding,
   buildSlackWorkspaceHandle,
+  fetchSlackThreadWindow,
   slackContinuationToken,
   type SlackBotToken,
   type SlackHandle,
@@ -1456,6 +1457,7 @@ async function deliverSlackMessage(input: {
     const threadContext = formatSlackThreadContext(priorMessages);
     const fileParts = await collectInboundFileParts({
       botUserId: input.botUserId,
+      fetchThreadWindow: (latest, size) => fetchSlackThreadWindow(thread, latest, size),
       // A DM can mention the app too, but every DM message brings its own files.
       isMentioned: input.kind === "app_mention",
       mention: message,

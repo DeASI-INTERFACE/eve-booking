@@ -281,7 +281,6 @@ export class ModelCaller {
         emissionState: step.position(),
         // A hook's compact intent compacts before this call, once.
         force: hasPendingCompaction(step.ctx),
-        historyProjector: config.historyProjector,
         messages: [...prompt.messages],
         model: this.input.model,
         promptMessages: withClientContext(prompt),
@@ -310,7 +309,7 @@ export class ModelCaller {
         thresholdPercent: settings.thresholdPercent,
       },
     };
-    this.projectedMessages = projectPrompt(step, prompt);
+    this.projectedMessages = projectPrompt(prompt);
     return await this.prepare(options);
   }
 

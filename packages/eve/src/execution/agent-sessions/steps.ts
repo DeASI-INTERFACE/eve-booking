@@ -310,7 +310,7 @@ async function startRemoteSession(
     forwardPrincipal: remote.forwardPrincipal,
     name: action.remoteAgentName,
     nodeId: action.nodeId,
-    resolverId: target.dynamicRemoteAgent?.credentialsStepId ?? action.nodeId,
+    resolverId: action.nodeId,
     sessionId: child.sessionId,
     url: remote.url,
   };

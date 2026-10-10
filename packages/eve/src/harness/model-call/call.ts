@@ -33,6 +33,7 @@ import { discardAttempt } from "#harness/session-machine/transitions.js";
 import { publicViewOf } from "#harness/session-machine/closure.js";
 import { activeTurnId } from "#harness/session-machine/view.js";
 import type { Step } from "#harness/step/context.js";
+import { hasPendingCompaction } from "#reactions/kinds/hook.js";
 import {
   compactPrompt,
   projectPrompt,
@@ -278,6 +279,8 @@ export class ModelCaller {
           turnId: step.position().turnId,
         },
         emissionState: step.position(),
+        // A hook's compact intent compacts before this call, once.
+        force: hasPendingCompaction(step.ctx),
         historyProjector: config.historyProjector,
         messages: [...prompt.messages],
         model: this.input.model,
@@ -392,12 +395,7 @@ export class ModelCaller {
     const agent = new ToolLoopAgent(settings);
 
     try {
-      const result = await this.stream(
-        agent,
-        callMessages,
-        hooks.stepResult,
-        attempt?.telemetry,
-      );
+      const result = await this.stream(agent, callMessages, hooks.stepResult, attempt?.telemetry);
       await attempt?.complete();
       return result;
     } catch (error) {

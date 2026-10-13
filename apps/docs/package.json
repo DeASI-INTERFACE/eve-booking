@@ -101,7 +101,7 @@
     "eve-channel-blooio": "0.2.0",
     "mdast-util-mdx-jsx": "3.2.0",
     "mdast-util-to-markdown": "2.1.2",
-    "postcss": "8.5.15",
+    "postcss": "8.5.23",
     "shadcn": "4.16.0",
     "tailwindcss": "4.3.0",
     "tsx": "^4.21.0",
